@@ -1,0 +1,42 @@
+class Solution {
+    public boolean checkPossibility(int[] nums) {
+        if(nums.length < 3)
+        {
+            return true;
+        }
+        boolean flag = true;
+        int first = nums[0];
+        int second = nums[1];
+        int index = 0;
+        while(first <= second && index < nums.length-2){
+            index++;
+            first = nums[index];
+            second = nums[index+1];
+        }
+        if(index >= nums.length-2)
+        {
+            return true;
+        }
+        //second > first
+        int tmp = second;
+        if(index > 0)
+        {
+            int pre = nums[index-1];
+            if(second < pre)
+            {
+                tmp = first;
+            }
+        }
+        index += 2;
+        while(index < nums.length && tmp <= nums[index])
+        {
+            tmp = nums[index++];
+        }
+        if(index == nums.length)
+        {
+            return true;
+        }
+        return false;
+        
+    }
+}
