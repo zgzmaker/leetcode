@@ -1,0 +1,22 @@
+核心思想：以环中的任一个元素开始，都是相同的结果。因此可以标记访问的元素，将复杂度降低为O(N)。
+同时当环的大小大于总长度的一半时，便可以停止继续遍历了。因为剩下的元素不可能再加入到最大环中，而剩下的元素总个数也小于最大环。
+
+class Solution {
+    public int arrayNesting(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        int max = 0;
+    
+        for(int i = 0; i < nums.length; i++){
+            int size = 0;
+            for(int k = i; nums[k] >= 0; size++){
+                int tmp = nums[k];
+                nums[k] = -1;
+                k = tmp;
+            }
+            max = Math.max(size, max);
+            if(max > nums.length/2)
+                break;
+        }
+        return max;
+    }
+}
