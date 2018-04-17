@@ -1,0 +1,23 @@
+核心思路：
+1、每次可以选择添加一个左括号或者右括号
+2. 当前string中的左括号个数一定要大于右括号
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> list = new ArrayList<>();
+        if(n == 0) return list;
+        core(list, "", n, n);
+        return list;
+    }
+    public void core(List<String> list, String tmp, int left, int right)
+    {
+        if(left == 0 && right == 0){
+            list.add(tmp);
+            return;
+        }
+        if(left > 0)
+            core(list, tmp+"(", left-1, right);
+        if(right > left)
+            core(list, tmp+")", left, right-1);
+    }
+}
