@@ -1,0 +1,35 @@
+核心思想：通过后序找root节点，然后递归两颗子树
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if(inorder == null || inorder.length == 0) return null;
+        return core(inorder, postorder, 0, inorder.length-1, 0, postorder.length-1);
+        
+    }
+    
+    public TreeNode core(int[] inOrder, int[] postOrder, int in_begin, int in_end, int post_begin, int post_end)
+    {
+        if(in_begin == in_end) return new TreeNode(inOrder[in_begin]);
+        if(in_begin > in_end) return null;
+        int rootVal = postOrder[post_end];
+        int i = in_begin;
+        for(; i <= in_end; i++){
+            if(inOrder[i] == rootVal){
+                break;
+            }
+        }
+        TreeNode root = new TreeNode(rootVal);
+        root.left = core(inOrder, postOrder, in_begin, i-1, post_begin, post_begin+i-in_begin-1);
+        root.right = core(inOrder, postOrder, i+1, in_end, post_begin+i-in_begin, post_begin-in_begin+in_end-1);
+        return root;
+    }
+}
